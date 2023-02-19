@@ -1,11 +1,11 @@
 import { type NextPage } from "next";
+import Layout from "./Layout";
 import Navigationbar from "./Navigationbar";
 const Home: NextPage = () => {
   return (
     <>
-      <div>
-        <Navigationbar></Navigationbar>
-      </div>
+      <Navigationbar></Navigationbar>
+      <Layout></Layout>
     </>
   );
 };
