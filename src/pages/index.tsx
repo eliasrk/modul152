@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Layout from "./Layout";
-import Navigationbar from "./Navigationbar";
+import Navigationbar from "../components/Navigationbar";
 const Home: NextPage = () => {
   return (
     <>
