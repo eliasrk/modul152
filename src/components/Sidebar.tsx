@@ -1,16 +1,22 @@
-import error from "next/error";
 import React, { useState } from "react";
-import { useAuthState, useIdToken } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import Modal from "./LoginModal";
+import SignupModal from "./SignupModal";
 
 type SidebarProps = {
   show: boolean;
+  toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const Sidebar = ({ show }: SidebarProps) => {
+const Sidebar = ({ show, toggleShow }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSignOpen, setIsSignOpen] = useState(false);
   const [user] = useAuthState(auth);
   const userEmail: string = user?.email as string;
+  const handleSignOut = () => {
+    void auth.signOut();
+    toggleShow(false);
+  };
   return (
     <>
       <div
@@ -19,30 +25,44 @@ const Sidebar = ({ show }: SidebarProps) => {
         show ? "bg-red-50" : "bg-blue-900"
       }`}
       >
-        <div className="flex h-full flex-col justify-center gap-10">
-          <div>
-            {user && (
-              <div className="justify-start">
-                <p>{userEmail}</p>
-              </div>
-            )}
-          </div>
+        <div className="p-2 pt-7 text-xl">
+          {user && (
+            <div className=" justify-start">{user && <p>{userEmail}</p>}</div>
+          )}
+        </div>
+        <div className=" flex h-5/6 flex-col justify-center gap-10">
           <div className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline">
             Home
           </div>
-          <div
-            className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline"
-            onClick={() => setIsOpen(true)}
-          >
-            Login
-            <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-          </div>
-          <div className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline">
-            Signup
-          </div>
+          {!user && (
+            <>
+              <div
+                className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline"
+                onClick={() => setIsOpen(true)}
+              >
+                Login
+                <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
+              </div>
+              <div
+                className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline"
+                onClick={() => void setIsSignOpen(true)}
+              >
+                Signup
+                <SignupModal isOpen={isSignOpen} setIsOpen={setIsSignOpen} />
+              </div>{" "}
+            </>
+          )}
           <div className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline">
             Contact
           </div>
+          {user ? (
+            <div
+              className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline"
+              onClick={() => handleSignOut()}
+            >
+              Sign Out
+            </div>
+          ) : null}
         </div>
       </div>
     </>
