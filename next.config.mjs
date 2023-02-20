@@ -9,7 +9,6 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
    * must comment the below `i18n` config out.
@@ -19,6 +18,9 @@ const config = {
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
+  },
+  images: {
+    domains: ["firebasestorage.googleapis.com"],
   },
 };
 export default config;

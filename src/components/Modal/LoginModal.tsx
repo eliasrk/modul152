@@ -1,30 +1,26 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React from "react";
 import { useState } from "react";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import "firebase/auth";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { FIREBASE_ERROR } from "../firebase/errors";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { FIREBASE_ERROR } from "../../firebase/errors";
 
 type ModalProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function SignupModal({ isOpen, setIsOpen }: ModalProps) {
+export default function Modal({ isOpen, setIsOpen }: ModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (password === confirmPassword) {
-      void createUserWithEmailAndPassword(email, password);
-    } else {
-      alert("Passwords do not match.");
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    void signInWithEmailAndPassword(email, password);
   };
   if (user) {
     setIsOpen(false);
@@ -52,7 +48,7 @@ export default function SignupModal({ isOpen, setIsOpen }: ModalProps) {
               </button>
             </div>
             <div className="mb-5 flex w-full items-center justify-center">
-              <h1 className="text-center">Sign Up</h1>
+              <h1 className="text-center">Log In</h1>
             </div>
             <div className="border-t border-slate-200"></div>
             <form onSubmit={onSubmit} className="mx-auto my-8 w-96 ">
@@ -77,21 +73,6 @@ export default function SignupModal({ isOpen, setIsOpen }: ModalProps) {
                   id="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
-                  className="w-full rounded border border-gray-300 p-2"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="confirmPassword"
-                  className="mb-2 block text-gray-600"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
                   className="w-full rounded border border-gray-300 p-2"
                 />
               </div>

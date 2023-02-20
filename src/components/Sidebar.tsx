@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
-import Modal from "./LoginModal";
-import SignupModal from "./SignupModal";
+import Modal from "./Modal/LoginModal";
+import SignupModal from "./Modal/SignupModal";
 
 type SidebarProps = {
   show: boolean;
@@ -15,7 +15,7 @@ const Sidebar = ({ show, toggleShow }: SidebarProps) => {
   const userEmail: string = user?.email as string;
   const handleSignOut = () => {
     void auth.signOut();
-    toggleShow(false);
+    setIsOpen(false);
   };
   return (
     <>
@@ -60,7 +60,7 @@ const Sidebar = ({ show, toggleShow }: SidebarProps) => {
               className="duration-30 pl-4 font-mono text-7xl font-extrabold text-stone-700 transition-all hover:translate-x-4 hover:underline"
               onClick={() => handleSignOut()}
             >
-              Sign Out
+              Log Out
             </div>
           ) : null}
         </div>
