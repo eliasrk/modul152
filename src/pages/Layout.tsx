@@ -7,10 +7,10 @@ const Body = () => {
   const [imageList, setImageList] = useState<string[]>([]);
 
   useEffect(() => {
-    const imgageListRef = ref(storage, "images/");
+    const imageListRef = ref(storage, "images/");
 
     const getImageList = async () => {
-      const res = await listAll(imgageListRef);
+      const res = await listAll(imageListRef);
       const urls = await Promise.all(
         res.items.map(async (itemRef, index, array): Promise<string> => {
           const url = await getDownloadURL(itemRef);

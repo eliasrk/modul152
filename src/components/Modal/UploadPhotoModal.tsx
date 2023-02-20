@@ -11,31 +11,52 @@ type UploadModalProps = {
   name: string;
 };
 
-const UploadPhotoModal = () => {
+const UploadPhotoModal: React.FC<UploadModalProps> = ({
+  isModalOpen,
+  setIsModalOpen,
+  onClose,
+}) => {
   const [isImageUpload, setImageUpload] = useState(null);
 
   const [isImageList, setIsImageList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const imgageListRef = ref(storage, "images/");
+  const imageListRef = ref(storage, "images/");
   const uploadImage = () => {
     if (isImageUpload === null) return;
-    const imageRef = ref(storage, `images/${isImageUpload.name + uuidv4()}`);
-    uploadBytes(imageRef, isImageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setIsImageList((prev) => [...prev, url]);
+    const name: string = (isImageUpload as File).name;
+    const imageRef = ref(storage, `images/${name + uuidv4()}`);
+    uploadBytes(imageRef, isImageUpload)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            setIsImageList((prev) => [...prev, url]);
+          })
+          .catch((error) => {
+            console.log("Error getting download URL:", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Error uploading image:", error);
       });
-    });
     setIsOpen(false);
     console.log("uploading image");
   };
   useEffect(() => {
-    listAll(imgageListRef).then((res) => {
-      res.items.forEach((itemRef) => {
-        getDownloadURL(itemRef).then((url) => {
-          setIsImageList((prev) => [...prev, url]);
+    listAll(imageListRef)
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          getDownloadURL(itemRef)
+            .then((url) => {
+              setIsImageList((prev) => [...prev, url]);
+            })
+            .catch((error) => {
+              console.error("Error getting download URL: ", error);
+            });
         });
+      })
+      .catch((error) => {
+        console.error("Error listing images: ", error);
       });
-    });
     console.log("isImageUpload", isImageUpload);
   }, [isImageUpload]);
   return (
