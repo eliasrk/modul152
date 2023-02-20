@@ -4,9 +4,10 @@ import UploadPhotoModal from "./Modal/UploadPhotoModal";
 
 type headerProps = {
   setIsUpload: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
 };
 
-const Header = () => {
+const Header = ({ name }: headerProps) => {
   const [show, toggleShow] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -18,15 +19,24 @@ const Header = () => {
     setIsModalOpen(false);
   };
 
+  function handleCloseModal(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       <div className={"${ show ? 'rotate-90' : ''}"}>
         <label
           className={
-            "z-5 swap swap-rotate absolute right-20 top-5 rounded-full bg-teal-100 p-1 shadow-md"
+            "z-5 swap-rotate swap absolute right-20 top-5 rounded-full bg-teal-100 p-1 shadow-md"
           }
         >
-          <UploadPhotoModal />
+          <UploadPhotoModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            onClose={handleCloseModal}
+            name={name}
+          />
           <svg
             className="rotate-45 fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +47,7 @@ const Header = () => {
             <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
           </svg>
         </label>
-        <label className="swap swap-rotate absolute right-5 top-5 rounded-full bg-teal-100 p-1 shadow-md">
+        <label className="swap-rotate swap absolute right-5 top-5 rounded-full bg-teal-100 p-1 shadow-md">
           <input type="checkbox" onClick={() => toggleShow(!show)} />
           <svg
             className="swap-off fill-current "

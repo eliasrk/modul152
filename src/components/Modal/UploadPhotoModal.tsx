@@ -11,7 +11,12 @@ type UploadModalProps = {
   name: string;
 };
 
-const UploadPhotoModal: React.FC<UploadModalProps> = () => {
+const UploadPhotoModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  onClose,
+  name,
+}: UploadModalProps) => {
   const [isImageUpload, setImageUpload] = useState<File | null>(null);
 
   const [isImageList, setIsImageList] = useState<string[]>([]);
