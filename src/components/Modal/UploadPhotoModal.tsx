@@ -16,14 +16,14 @@ const UploadPhotoModal: React.FC<UploadModalProps> = ({
   setIsModalOpen,
   onClose,
 }) => {
-  const [isImageUpload, setImageUpload] = useState(null);
+  const [isImageUpload, setImageUpload] = useState<File | null>(null);
 
   const [isImageList, setIsImageList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const imageListRef = ref(storage, "images/");
   const uploadImage = () => {
     if (isImageUpload === null) return;
-    const name: string = (isImageUpload as File).name;
+    const name: string = isImageUpload.name;
     const imageRef = ref(storage, `images/${name + uuidv4()}`);
     uploadBytes(imageRef, isImageUpload)
       .then((snapshot) => {
@@ -83,7 +83,9 @@ const UploadPhotoModal: React.FC<UploadModalProps> = ({
                   className="file-input-ghost file-input mb-2 w-full max-w-xs"
                   type="file"
                   onChange={(event) => {
-                    setImageUpload(event.target.files[0]);
+                    if (event.target.files && event.target.files[0]) {
+                      setImageUpload(event.target.files[0]);
+                    }
                   }}
                 />
 
