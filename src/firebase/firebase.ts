@@ -8,13 +8,21 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBvd0udeQi5Mq_pUcyLV3-YWXT71YLS2m8",
+
+  apiKey: "AIzaSyBxICnOgmm1fhDILYr6opITYiIxwcAMcMI",
+
   authDomain: "modul152-e493c.firebaseapp.com",
+
   projectId: "modul152-e493c",
+
   storageBucket: "modul152-e493c.appspot.com",
+
   messagingSenderId: "654396779624",
+
   appId: "1:654396779624:web:ca9570dc6e87aea9189fdd"
+
 };
+
 
 // Initialize Firebase
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

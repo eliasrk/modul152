@@ -41,3 +41,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 src/firebase/firebase.ts
+src/firebase/firebase.ts
