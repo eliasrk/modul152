@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ref } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 import Image from "next/image";
+import Head from "next/head";
 const Body = () => {
   const [imageList, setImageList] = useState<string[]>([]);
   useEffect(() => {
@@ -22,6 +23,10 @@ const Body = () => {
   }, []);
   return (
     <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>Gallery</title>
+      </Head>
       <div className="flex h-20 shadow-md"></div>
       <div className="border-t"></div>
 
@@ -29,7 +34,7 @@ const Body = () => {
         <div className="flex flex-wrap gap-10">
           {imageList.map((url, index) => (
             <>
-              <div key={index} className="card w-96 bg-base-100 shadow-xl">
+              <div key={index} className="card bg-base-100 w-96 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title"></h2>
                 </div>
