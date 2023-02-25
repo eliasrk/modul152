@@ -28,7 +28,7 @@ const Header = ({ name }: headerProps) => {
       <div className={"${ show ? 'rotate-90' : ''}"}>
         <label
           className={
-            "z-5 absolute right-20 top-5 rounded-full bg-teal-100 p-1 shadow-md"
+            "absolute right-20 top-5 z-50 rounded-full bg-teal-100 p-1 shadow-md"
           }
         >
           <UploadPhotoModal
@@ -47,7 +47,7 @@ const Header = ({ name }: headerProps) => {
             <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
           </svg>
         </label>
-        <label className="absolute right-5 top-5 rounded-full bg-teal-100 p-1 shadow-md">
+        <label className="absolute right-5 top-5 z-50 rounded-full bg-teal-100 p-1 shadow-md">
           <input type="checkbox" onClick={() => toggleShow(!show)} />
           <svg
             className="swap-off fill-current "

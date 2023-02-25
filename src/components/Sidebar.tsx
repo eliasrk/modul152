@@ -20,7 +20,7 @@ const Sidebar = ({ show, toggleShow }: SidebarProps) => {
   return (
     <>
       <div
-        className={`group:bg-blue-100 absolute right-0 top-0 -z-50 h-full 
+        className={`group:bg-blue-100 z-70 absolute right-0 top-0 h-full 
       w-1/4 transform overflow-x-hidden bg-teal-400 ease-in-out ${
         show ? "bg-red-50" : "bg-blue-900"
       }`}

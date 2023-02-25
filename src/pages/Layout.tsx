@@ -1,57 +1,14 @@
-import { getDownloadURL, listAll } from "firebase/storage";
-import React, { useEffect, useState } from "react";
-import { ref } from "firebase/storage";
-import { storage } from "../firebase/firebase";
-import Image from "next/image";
+import React from "react";
 import Head from "next/head";
+import MainBody from "../components/MainBody";
 const Body = () => {
-  const [imageList, setImageList] = useState<string[]>([]);
-  useEffect(() => {
-    const imageListRef = ref(storage, "images/");
-    const getImageList = async () => {
-      const res = await listAll(imageListRef);
-      const urls = await Promise.all(
-        res.items.map(async (itemRef, index, array): Promise<string> => {
-          const url = await getDownloadURL(itemRef);
-          return url;
-        })
-      );
-      setImageList(urls);
-    };
-
-    void getImageList();
-  }, []);
   return (
     <>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <title>Gallery</title>
       </Head>
-      <div className="flex h-20 shadow-md"></div>
-      <div className="border-t"></div>
-
-      <div>
-        <div className="flex flex-wrap gap-10">
-          {imageList.map((url, index) => (
-            <>
-              <div key={index} className="card bg-base-100 w-96 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title"></h2>
-                </div>
-                <figure className="bgp-10 h-full items-center">
-                  <Image
-                    src={url}
-                    width={300}
-                    height={200}
-                    alt=""
-                    loading="lazy"
-                  />
-                </figure>
-              </div>
-            </>
-          ))}
-        </div>
-      </div>
+      <MainBody></MainBody>
     </>
   );
 };
