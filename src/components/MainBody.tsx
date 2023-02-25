@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ref } from "firebase/storage";
 import { storage } from "../firebase/firebase";
 import Image from "next/image";
+
 const MainBody = () => {
   const [imageList, setImageList] = useState<string[]>([]);
   useEffect(() => {
@@ -23,9 +24,6 @@ const MainBody = () => {
   return (
     <>
       <main className="-z-100">
-        <div className="flex h-20 shadow-md"></div>
-        <div className="border-t"></div>
-
         <div>
           <div className="flex flex-wrap gap-10">
             {imageList.map((url, index) => (
@@ -41,6 +39,7 @@ const MainBody = () => {
                       height={200}
                       alt=""
                       loading="lazy"
+                      key={index}
                     />
                   </figure>
                 </div>

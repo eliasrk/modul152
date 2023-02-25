@@ -11,6 +11,8 @@ type UploadModalProps = {
   name: string;
 };
 
+//TODO: limit file upload size and add type of file allowed
+
 const UploadPhotoModal = ({
   isModalOpen,
   setIsModalOpen,
@@ -59,7 +61,8 @@ const UploadPhotoModal = ({
         console.error("Error listing images: ", error);
       });
     console.log("isImageUpload", isImageUpload);
-  }, [imageListRef, isImageUpload]);
+  }, [isImageUpload]);
+
   return (
     <>
       <button onClick={() => setIsOpen(true)}></button>
