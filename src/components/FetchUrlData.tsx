@@ -16,7 +16,6 @@ const FetchUrlData = ({ url }: Props) => {
     async function getImageData(name: string) {
       const temp1 = name.slice(82);
       const temp = temp1.substring(0, temp1.indexOf("?"));
-      console.log(temp);
       const q = query(
         collection(db, "myCollection"),
         where("name", "==", temp)
@@ -26,7 +25,6 @@ const FetchUrlData = ({ url }: Props) => {
         querySnapshot.forEach((doc) => {
           setLicense(String(doc.data().licensing));
           setUserName(String(doc.data().username));
-          console.log(doc.data().licensing);
         });
       }
     }
