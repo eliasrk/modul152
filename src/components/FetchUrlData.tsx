@@ -37,7 +37,7 @@ const FetchUrlData = ({ url }: Props) => {
   }, [url]);
   return (
     <>
-      <div className="mt-2 mb-4 flex h-10 w-full flex-col rounded-lg text-center">
+      <div className="mt-2 mb-4 flex h-10 w-full flex-col rounded-lg text-center p-2">
         <h1>Licensing: {license}</h1>
         <h2>creator: {username}</h2>
       </div>

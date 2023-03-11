@@ -18,6 +18,7 @@ const Header = ({ name }: headerProps) => {
   const [isSignOpen, setIsSignOpen] = useState(false);
   const [user] = useAuthState(auth);
   const userEmail: string = user?.email as string;
+  //const userEmail = tempEmail.slice(0, tempEmail.indexOf("@"));
 
   const handleSignOut = () => {
     void auth.signOut();

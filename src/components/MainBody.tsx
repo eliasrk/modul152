@@ -5,6 +5,7 @@ import { storage } from "../firebase/firebase";
 import FetchUrlData from "./FetchUrlData";
 const MainBody = () => {
   const [imageList, setImageList] = useState<string[]>([]);
+  const [isquote, setQuote] = useState<string>("");
 
   useEffect(() => {
     const imageListRef = ref(storage, "images/");
@@ -21,7 +22,11 @@ const MainBody = () => {
 
     void getImageList();
   }, []);
+  const quotePromise = fetch("https://animechan.vercel.app/api/random")
+    .then((response) => response.json())
+    .then((data) => data.quote);
 
+  quotePromise.then((quote) => console.log(quote));
   return (
     <>
       <main className="-z-100">
@@ -58,6 +63,11 @@ const MainBody = () => {
           </div>
         </div>
       </main>
+      <footer>
+        <div>
+          <h1></h1>
+        </div>
+      </footer>
     </>
   );
 };
