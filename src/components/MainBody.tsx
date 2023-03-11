@@ -21,11 +21,6 @@ const MainBody = () => {
 
     void getImageList();
   }, []);
-  const quotePromise = fetch("https://animechan.vercel.app/api/random")
-    .then((response) => response.json())
-    .then((data) => data.quote);
-
-  quotePromise.then((quote) => console.log(quote));
   return (
     <>
       <main className="-z-100">
