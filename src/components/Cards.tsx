@@ -5,7 +5,6 @@ import {
   where,
   QuerySnapshot,
   getDocs,
-  updateDoc,
 } from "firebase/firestore";
 import { getImageSize } from "next/dist/server/image-optimizer";
 import Image from "next/image";
@@ -21,7 +20,8 @@ type cardsProps = {
 const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likedCount, setLikedCount] = useState<number>(0);
-  const [user] = useAuthState(auth);
+  const urlblur = url + "?w=10&q=1";
+  console.log(urlblur)
   useEffect(() => {
     async function getlikes(name: string) {
       const temp1 = name.slice(82);
@@ -69,12 +69,7 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
                 src={url}
                 width={700}
                 height={700}
-                /*
-              TODO to be used to blur when i have thumbnails
-              placeholder="blur"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(700, 475)
-              )}`} */
+                blurDataURL={urlblur}
                 alt=""
                 loading="lazy"
                 className="rounded-lg"
