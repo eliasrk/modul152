@@ -60,6 +60,21 @@ const UploadPhotoModal = ({
       .catch((error) => {
         console.log("Error uploading image:", error);
       });
+ const thumbnailRef = ref(storage, `thumbnail/${name}`);
+      uploadBytes(thumbnailRef, isImageUpload)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            setIsImageList((prev) => [...prev, url]);
+          })
+          .catch((error) => {
+            console.log("Error getting download URL:", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Error uploading image:", error);
+      });
+
     setIsModalOpen(false);
     console.log("uploading image");
   };

@@ -5,6 +5,7 @@ import {
   where,
   QuerySnapshot,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { getImageSize } from "next/dist/server/image-optimizer";
 import Image from "next/image";
@@ -32,6 +33,10 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
       const querySnapshot: QuerySnapshot = await getDocs(q);
       if (querySnapshot) {
         querySnapshot.forEach((doc) => {
+          // const docRef = doc.ref;
+          // updateDoc(docRef, {
+          //   likes: likedCount,
+          // });
           setLikedCount(doc.data().likes as number);
         });
       }
@@ -40,15 +45,15 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
       console.log("Error getting document:", error);
     });
   });
-function toggleLike() {
-  const newLikeValue = !like;
-  if (newLikeValue) {
-    setLikedCount((prevCount) => prevCount + 1);
-  } else {
-    setLikedCount((prevCount) => prevCount - 1);
+  function toggleLike() {
+    const newLikeValue = !like;
+    if (newLikeValue) {
+      setLikedCount((prevCount) => prevCount + 1);
+    } else {
+      setLikedCount((prevCount) => prevCount - 1);
+    }
+    setLike(newLikeValue);
   }
-  setLike(newLikeValue);
-}
   return (
     <>
       <div
