@@ -11,6 +11,7 @@ interface Props {
 const FetchUrlData = ({ url }: Props) => {
   const [license, setLicense] = useState<string>("");
   const [username, setUserName] = useState<string>("");
+  const [creator,setCreator] = useState<string>("");
   const name = typeof url === "string" ? url : url?.name;
   useEffect(() => {
     async function getImageData(name: string) {
@@ -25,6 +26,7 @@ const FetchUrlData = ({ url }: Props) => {
         querySnapshot.forEach((doc) => {
           setLicense(String(doc.data().licensing));
           setUserName(String(doc.data().username));
+          setCreator(String(doc.data().createdBy))
         });
       }
     }
@@ -38,6 +40,7 @@ const FetchUrlData = ({ url }: Props) => {
       <div className="mt-2 mb-4 flex h-10 w-full flex-col rounded-lg text-center p-2">
         <h1>Licensing: {license}</h1>
         <h2>creator: {username}</h2>
+        <h2>uploaded by: {creator}</h2>
       </div>
     </>
   );

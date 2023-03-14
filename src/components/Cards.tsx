@@ -80,7 +80,7 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
             </div>
           </div>
 
-          <div className="flex justify-center ">
+          <div className="flex justify-center pb-2">
             <FetchUrlData url={url} />
             <div className="grid place-content-center p-5 align-middle">
               <div

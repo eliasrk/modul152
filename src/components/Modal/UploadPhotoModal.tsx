@@ -31,6 +31,11 @@ const UploadPhotoModal = ({
     { License: "CC BY-NC-SA" },
     { License: "CC BY-NC-ND" },
   ];
+  const handleCreatorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setCreator(event.target.value);
+  console.log(creator)
+}
+
   const [isImageList, setIsImageList] = useState<string[]>([]);
   const imageListRef = ref(storage, "images/");
   const [creator, setCreator] = useState<string>("");
@@ -47,8 +52,8 @@ const UploadPhotoModal = ({
             setIsImageList((prev) => [...prev, url]);
             const docRef = addDoc(collection(db, "myCollection"), {
               name: name,
-              username: user?.email,
-              createdBy: creator,
+              username: creator,
+              createdBy: user?.email,
               licensing: selected?.License,
               createdAt: Timestamp.now(),
               likes: 0,
@@ -135,9 +140,8 @@ const UploadPhotoModal = ({
                       <input
                         type="text"
                         value={creator}
-                        onChange={(event) => setCreator(event.target.value)}
+                        onChange={handleCreatorChange}
                         className="ml-1 w-full rounded ring ring-gray-50 drop-shadow-lg"
-                        placeholder={user.email || ""}
                       />
                     </div>
 
