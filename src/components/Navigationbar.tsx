@@ -6,6 +6,7 @@ import { auth } from "../firebase/firebase";
 import LoginModal from "./Modal/LoginModal";
 import SignupModal from "./Modal/SignupModal";
 import UploadPhotoModal from "./Modal/UploadPhotoModal";
+import Image from "next/image";
 type headerProps = {
   setIsUpload: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
@@ -38,6 +39,9 @@ const Header = ({ name }: headerProps) => {
   return (
     <>
       <div className="flex justify-end p-5">
+        <div className="mr-auto flex items-center">
+          <Image src="/index.svg" alt="My Icon" width={35} height={35} />
+        </div>
         {isModalOpen && (
           <UploadPhotoModal
             isModalOpen={isModalOpen}

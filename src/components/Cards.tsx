@@ -26,6 +26,8 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
     async function getlikes(name: string) {
       const temp1 = name.slice(82);
       const temp = temp1.substring(0, temp1.indexOf("?"));
+      const urlblur = "thumbnail/" + temp;
+      console.log(urlblur)
       const q = query(
         collection(db, "myCollection"),
         where("name", "==", temp)
@@ -69,8 +71,9 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
                 src={url}
                 width={700}
                 height={700}
-                blurDataURL={urlblur}
                 alt=""
+                placeholder="blur"
+                blurDataURL= {urlblur}
                 loading="lazy"
                 className="rounded-lg"
               />

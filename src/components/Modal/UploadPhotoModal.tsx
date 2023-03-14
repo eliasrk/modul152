@@ -51,6 +51,7 @@ const UploadPhotoModal = ({
               createdBy: creator,
               licensing: selected?.License,
               createdAt: Timestamp.now(),
+              likes: 0,
             });
           })
           .catch((error) => {
@@ -60,8 +61,8 @@ const UploadPhotoModal = ({
       .catch((error) => {
         console.log("Error uploading image:", error);
       });
- const thumbnailRef = ref(storage, `thumbnail/${name}`);
-      uploadBytes(thumbnailRef, isImageUpload)
+    const thumbnailRef = ref(storage, `thumbnail/${name}`);
+    uploadBytes(thumbnailRef, isImageUpload)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
@@ -128,57 +129,75 @@ const UploadPhotoModal = ({
                       }
                     }}
                   />
-                  <Listbox value={selected} onChange={setSelected}>
-                    <div className="relative mt-1">
-                      <Listbox.Button className="relative my-5 w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                        <span className="block truncate">
-                          {selected?.License}
-                        </span>
-                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                          <Icon icon="lucide:chevrons-up-down" />
-                        </span>
-                      </Listbox.Button>
-                      <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                      >
-                        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {CreativeCommons.map((license, licenseIdx) => (
-                            <Listbox.Option
-                              key={licenseIdx}
-                              className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                  active
-                                    ? "bg-amber-100 text-amber-900"
-                                    : "text-gray-900"
-                                }`
-                              }
-                              value={license}
-                            >
-                              {({ selected }) => (
-                                <>
-                                  <span
-                                    className={`block truncate ${
-                                      selected ? "font-medium" : "font-normal"
-                                    }`}
-                                  >
-                                    {license.License}
-                                  </span>
-                                  {selected ? (
-                                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                      <Icon icon="mdi:tick" />
-                                    </span>
-                                  ) : null}
-                                </>
-                              )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
+                  <div>
+                    <div className="mt-2 flex items-center gap-2">
+                      <h2>Creator: </h2>
+                      <input
+                        type="text"
+                        value={creator}
+                        onChange={(event) => setCreator(event.target.value)}
+                        className="ml-1 w-full rounded ring ring-gray-50 drop-shadow-lg"
+                        placeholder={user.email || ""}
+                      />
                     </div>
-                  </Listbox>
+
+                    <div className="flex items-center gap-2">
+                      <h2>License: </h2>
+                      <Listbox value={selected} onChange={setSelected}>
+                        <div className="relative mt-1 w-full">
+                          <Listbox.Button className="relative my-5 w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                            <span className="block truncate">
+                              {selected?.License}
+                            </span>
+                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                              <Icon icon="lucide:chevrons-up-down" />
+                            </span>
+                          </Listbox.Button>
+                          <Transition
+                            as={Fragment}
+                            leave="transition ease-in duration-100"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                              {CreativeCommons.map((license, licenseIdx) => (
+                                <Listbox.Option
+                                  key={licenseIdx}
+                                  className={({ active }) =>
+                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                      active
+                                        ? "bg-amber-100 text-amber-900"
+                                        : "text-gray-900"
+                                    }`
+                                  }
+                                  value={license}
+                                >
+                                  {({ selected }) => (
+                                    <>
+                                      <span
+                                        className={`block truncate ${
+                                          selected
+                                            ? "font-medium"
+                                            : "font-normal"
+                                        }`}
+                                      >
+                                        {license.License}
+                                      </span>
+                                      {selected ? (
+                                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                          <Icon icon="mdi:tick" />
+                                        </span>
+                                      ) : null}
+                                    </>
+                                  )}
+                                </Listbox.Option>
+                              ))}
+                            </Listbox.Options>
+                          </Transition>
+                        </div>
+                      </Listbox>
+                    </div>
+                  </div>
                   <div className="flex w-full items-center justify-center ">
                     <button
                       type="submit"
