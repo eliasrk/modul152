@@ -41,7 +41,6 @@ const FetchUrlData = ({ url }: Props) => {
         <h1>Licensing: {license}</h1>
         <h2>creator: {username}</h2>
         <h2>uploaded by: {creator}</h2>
-        
       </div>
     </>
   );

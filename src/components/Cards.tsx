@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react";
+import { doc, QuerySnapshot } from "firebase/firestore";
 import {
   query,
   collection,
   where,
-  QuerySnapshot,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { getImageSize } from "next/dist/server/image-optimizer";
 import Image from "next/image";
@@ -19,15 +20,22 @@ type cardsProps = {
 
 const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
   const [like, setLike] = useState<boolean>(false);
+  const [tempary, setTemp] = useState<string>("");
   const [likedCount, setLikedCount] = useState<number>(0);
+  let updatebyone = 0;
+  if (like) {
+    updatebyone = -1;
+  } else {
+    updatebyone = 1;
+  }
   const urlblur = url + "?w=10&q=1";
-  console.log(urlblur)
   useEffect(() => {
+    console.log("useEffect");
     async function getlikes(name: string) {
       const temp1 = name.slice(82);
       const temp = temp1.substring(0, temp1.indexOf("?"));
+      setTemp(temp);
       const urlblur = "thumbnail/" + temp;
-      console.log(urlblur)
       const q = query(
         collection(db, "myCollection"),
         where("name", "==", temp)
@@ -35,24 +43,27 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
       const querySnapshot: QuerySnapshot = await getDocs(q);
       if (querySnapshot) {
         querySnapshot.forEach((doc) => {
-          // const docRef = doc.ref;
-          // updateDoc(docRef, {
-          //   likes: likedCount,
-          // });
           setLikedCount(doc.data().likes as number);
+          1;
+          updateDoc(doc.ref, {
+            likes: likedCount + updatebyone,
+          }).catch((error) => {
+            console.log("Error updating document:", error);
+          });
         });
       }
     }
     getlikes(url).catch((error) => {
       console.log("Error getting document:", error);
     });
-  });
+  }, [like]);
+
   function toggleLike() {
     const newLikeValue = !like;
     if (newLikeValue) {
-      setLikedCount((prevCount) => prevCount + 1);
+      setLikedCount(likedCount + updatebyone);
     } else {
-      setLikedCount((prevCount) => prevCount - 1);
+      setLikedCount(likedCount + updatebyone);
     }
     setLike(newLikeValue);
   }
@@ -73,7 +84,7 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
                 height={700}
                 alt=""
                 placeholder="blur"
-                blurDataURL= {urlblur}
+                blurDataURL={urlblur}
                 loading="lazy"
                 className="rounded-lg"
               />
