@@ -1,9 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
-
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -22,5 +20,7 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+//performance doesnt work in ssr
 
-export { app, auth, storage,db};
+
+export { app, auth, storage,db };
