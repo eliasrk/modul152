@@ -1,4 +1,4 @@
-import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { getDownloadURL, getMetadata, listAll, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase/firebase";
 import Cards from "./Cards";
@@ -10,16 +10,22 @@ const MainBody = () => {
     const getImageList = async () => {
       const res = await listAll(imageListRef);
       const urls = await Promise.all(
-        res.items.map(async (itemRef, index, array): Promise<string> => {
-          const url = await getDownloadURL(itemRef);
-          return url;
-        })
+        res.items.map(
+          async (itemRef): Promise<{ url: string; createdAt: Date }> => {
+            const url = await getDownloadURL(itemRef);
+            const metadata = await getMetadata(itemRef);
+            const createdAt = new Date(metadata.timeCreated);
+            return { url, createdAt };
+          }
+        )
       );
-      setImageList(urls);
+      urls.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      setImageList(urls.map((item) => item.url));
     };
 
     void getImageList();
-  }, []);
+  }, [imageList]);
+
   return (
     <>
       <main className="-z-100">

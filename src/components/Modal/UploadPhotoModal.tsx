@@ -128,8 +128,13 @@ const UploadPhotoModal = ({
                   <input
                     className="file-input-ghost file-input mb-2 w-full max-w-xs"
                     type="file"
+                    accept=".jpg,.jpeg,.png,.webp"
                     onChange={(event) => {
-                      if (event.target.files && event.target.files[0]) {
+                      if (
+                        event.target.files &&
+                        event.target.files[0] &&
+                        event.target.files[0].size < 5000000 // limits it to less than 5MB
+                      ) {
                         setImageUpload(event.target.files[0]);
                       }
                     }}

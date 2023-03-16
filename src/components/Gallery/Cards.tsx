@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { doc, QuerySnapshot } from "firebase/firestore";
+import { doc, orderBy, QuerySnapshot } from "firebase/firestore";
 import {
   query,
   collection,
@@ -21,18 +21,14 @@ type cardsProps = {
 const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likedCount, setLikedCount] = useState<number>(0);
-  let updatebyone = 0;
-  if (like) {
-    updatebyone = -1;
-  } else {
-    updatebyone = 1;
-  }
+  const [tempary, setTempary] = useState<string>("");
+  const [user] = useAuthState(auth);
   const urlblur = url + "?w=10&q=1";
   useEffect(() => {
-    console.log("useEffect");
     async function getlikes(name: string) {
       const temp1 = name.slice(82);
       const temp = temp1.substring(0, temp1.indexOf("?"));
+      setTempary(temp);
       const q = query(
         collection(db, "myCollection"),
         where("name", "==", temp)
@@ -41,40 +37,47 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
       if (querySnapshot) {
         querySnapshot.forEach((doc) => {
           setLikedCount(doc.data().likes as number);
-          1;
-          updateDoc(doc.ref, {
-            likes: likedCount + updatebyone,
-          }).catch((error) => {
-            console.log("Error updating document:", error);
-          });
         });
       }
     }
     getlikes(url).catch((error) => {
       console.log("Error getting document:", error);
     });
-  }, [like]);
+  }, []);
 
-  function toggleLike() {
+  async function toggleLike() {
+    const q = query(
+      collection(db, "myCollection"),
+      where("name", "==", tempary)
+    );
+
     const newLikeValue = !like;
-    if (newLikeValue) {
-      setLikedCount(likedCount + updatebyone);
-    } else {
-      setLikedCount(likedCount + updatebyone);
-    }
+
     setLike(newLikeValue);
+    const querySnapshot: QuerySnapshot = await getDocs(q);
+    if (querySnapshot) {
+      querySnapshot.forEach((doc) => {
+        updateDoc(doc.ref, {
+          likes: likedCount + (like ? -1 : 1),
+        }).catch((error) => {
+          console.log("Error updating document:", error);
+        });
+        setLikedCount(likedCount + (like ? -1 : 1));
+      });
+    }
   }
+
   return (
     <>
       <div
         //TODO: add Flex Grow to make the cards the same size
         className={`${
           !like ? "animate-clicked" : ""
-        } " bg-base-100 w-96 rounded-lg shadow-xl transition-shadow ease-in-out hover:shadow-2xl`}
+        } " bg-base-100 w-96 rounded-lg shadow-xl transition-shadow ease-in-out hover:shadow-2xl `}
       >
         <div className="flex flex-col rounded-lg">
           <div className="rounded-lg bg-gray-200 p-1">
-            <div className="grid h-96 place-content-center overflow-hidden rounded-lg bg-white">
+            <div className=" h-96 place-content-center overflow-hidden rounded-lg active:scale-150">
               <Image
                 src={url}
                 width={700}
@@ -83,7 +86,7 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
                 placeholder="blur"
                 blurDataURL={urlblur}
                 loading="lazy"
-                className="rounded-lg"
+                className="rounded-lg "
               />
             </div>
           </div>
@@ -94,8 +97,8 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
               <div
                 className={`${
                   !like ? " text-white" : "text-gray-900"
-                } group rounded-full p-1 hover:bg-gray-100 active:animate-clicked active:animate-wiggle active:bg-gray-200 `}
-                onClick={() => toggleLike()}
+                } group flex items-center gap-2 rounded-full p-1 hover:bg-gray-100 active:animate-clicked active:animate-wiggle active:bg-gray-200 `}
+                onClick={() => void toggleLike()}
               >
                 <div className="text-black">{likedCount}</div>
                 {like ? (
