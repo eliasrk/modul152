@@ -1,10 +1,14 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { storage } from "../../firebase/firebase";
-import Cards from "./Cards";
-const MainBody = () => {
-  const [imageList, setImageList] = useState<string[]>([]);
+import FeedCard from "./FeedCard";
 
+type feedProps = {
+  //
+};
+
+const Feed: React.FC<feedProps> = () => {
+  const [imageList, setImageList] = useState<string[]>([]);
   useEffect(() => {
     const imageListRef = ref(storage, "images/");
     const getImageList = async () => {
@@ -22,23 +26,14 @@ const MainBody = () => {
   }, []);
   return (
     <>
-      <main className="-z-100">
-        <div>
-          <div className="flex flex-wrap gap-10 ">
-            {imageList.map((url, index) => (
-              <div key={index}>
-                <Cards url={url} />
-              </div>
-            ))}
+      <div className="m-2 flex flex-wrap justify-center gap-2 ">
+        {imageList.map((url, index) => (
+          <div key={index}>
+            <FeedCard url={url} />
           </div>
-        </div>
-      </main>
-      <footer>
-        <div>
-          <h1></h1>
-        </div>
-      </footer>
+        ))}
+      </div>
     </>
   );
 };
-export default MainBody;
+export default Feed;

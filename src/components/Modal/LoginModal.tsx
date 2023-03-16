@@ -91,7 +91,7 @@ export default function Modal({ isOpen, setIsOpen }: ModalProps) {
                 <div className="flex w-full items-center justify-center ">
                   <button
                     type="submit"
-                    className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                    className="rounded bg-blue-300 py-2 px-4 font-bold text-white hover:bg-blue-500"
                   >
                     Login
                   </button>

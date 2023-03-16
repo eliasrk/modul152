@@ -32,9 +32,9 @@ const UploadPhotoModal = ({
     { License: "CC BY-NC-ND" },
   ];
   const handleCreatorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setCreator(event.target.value);
-  console.log(creator)
-}
+    setCreator(event.target.value);
+    console.log(creator);
+  };
 
   const [isImageList, setIsImageList] = useState<string[]>([]);
   const imageListRef = ref(storage, "images/");
@@ -170,7 +170,7 @@ const UploadPhotoModal = ({
                                   className={({ active }) =>
                                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                       active
-                                        ? "bg-amber-100 text-amber-900"
+                                        ? "bg-blue-100 text-gray-600"
                                         : "text-gray-900"
                                     }`
                                   }
@@ -205,7 +205,7 @@ const UploadPhotoModal = ({
                   <div className="flex w-full items-center justify-center ">
                     <button
                       type="submit"
-                      className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                      className="rounded bg-blue-300 py-2 px-4 font-bold text-white hover:bg-blue-500"
                       onClick={() => uploadImage()}
                     >
                       Upload Image
