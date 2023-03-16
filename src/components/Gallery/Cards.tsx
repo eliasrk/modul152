@@ -11,7 +11,7 @@ import { getImageSize } from "next/dist/server/image-optimizer";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import FetchUrlData from "./FetchUrlData";
 
 type cardsProps = {
@@ -20,7 +20,6 @@ type cardsProps = {
 
 const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
   const [like, setLike] = useState<boolean>(false);
-  const [tempary, setTemp] = useState<string>("");
   const [likedCount, setLikedCount] = useState<number>(0);
   let updatebyone = 0;
   if (like) {
@@ -34,8 +33,6 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
     async function getlikes(name: string) {
       const temp1 = name.slice(82);
       const temp = temp1.substring(0, temp1.indexOf("?"));
-      setTemp(temp);
-      const urlblur = "thumbnail/" + temp;
       const q = query(
         collection(db, "myCollection"),
         where("name", "==", temp)

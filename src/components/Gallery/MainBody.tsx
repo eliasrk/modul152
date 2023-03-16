@@ -1,6 +1,6 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { storage } from "../firebase/firebase";
+import { storage } from "../../firebase/firebase";
 import Cards from "./Cards";
 const MainBody = () => {
   const [imageList, setImageList] = useState<string[]>([]);

@@ -1,8 +1,8 @@
 import { type NextPage } from "next";
-import Layout from "./Layout";
-import Navigationbar from "../components/Navigationbar";
-import { SetStateAction } from "react";
+import type { SetStateAction } from "react";
 import Head from "next/head";
+import MainBody from "../components/Gallery/MainBody";
+import Navigationbar from "../components/Gallery/Navigationbar";
 const Home: NextPage = () => {
   return (
     <>
@@ -11,12 +11,12 @@ const Home: NextPage = () => {
         <title>Gallery</title>
       </Head>
       <Navigationbar
-        setIsUpload={function (value: SetStateAction<boolean>): void {
+        setIsUpload={function (): void {
           throw new Error("Function not implemented.");
         }}
         name={""}
       ></Navigationbar>
-      <Layout></Layout>
+      <MainBody></MainBody>
     </>
   );
 };

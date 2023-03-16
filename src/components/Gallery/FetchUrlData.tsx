@@ -2,7 +2,7 @@ import type { QuerySnapshot } from "firebase/firestore";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React from "react";
 import { useState, useEffect } from "react";
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 
 interface Props {
   url: string | { name: string };

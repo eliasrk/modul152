@@ -2,11 +2,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import React, { Fragment, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/firebase";
-import LoginModal from "./Modal/LoginModal";
-import SignupModal from "./Modal/SignupModal";
-import UploadPhotoModal from "./Modal/UploadPhotoModal";
+import UploadPhotoModal from "./../Modal/UploadPhotoModal";
 import Image from "next/image";
+import { auth } from "../../firebase/firebase";
+import LoginModal from "../Modal/LoginModal";
+import SignupModal from "../Modal/SignupModal";
 type headerProps = {
   setIsUpload: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;

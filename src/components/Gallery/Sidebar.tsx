@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/firebase";
-import Modal from "./Modal/LoginModal";
-import SignupModal from "./Modal/SignupModal";
-
+import { auth } from "../../firebase/firebase";
+import Modal from "../Modal/LoginModal";
+import SignupModal from "../Modal/SignupModal";
+//old does do anything but may need parts from it
 type SidebarProps = {
   show: boolean;
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
