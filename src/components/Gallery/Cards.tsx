@@ -1,13 +1,12 @@
 import { Icon } from "@iconify/react";
-import { doc, orderBy, QuerySnapshot } from "firebase/firestore";
+import type { QuerySnapshot } from "firebase/firestore";
 import {
-  query,
   collection,
-  where,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
-import { getImageSize } from "next/dist/server/image-optimizer";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -97,14 +96,22 @@ const Cards: React.FC<cardsProps> = ({ url }: cardsProps) => {
               <div
                 className={`${
                   !like ? " text-white" : "text-gray-900"
-                } group flex items-center gap-2 rounded-full p-1 hover:bg-gray-100 active:animate-clicked active:animate-wiggle active:bg-gray-200 `}
+                } group flex items-center gap-2 rounded-full p-1 hover:bg-gray-100 active:animate-clicked  active:bg-gray-200 `}
                 onClick={() => void toggleLike()}
               >
                 <div className="text-black">{likedCount}</div>
                 {like ? (
-                  <Icon icon="icon-park-solid:like" color="red" />
+                  <Icon
+                    icon="icon-park-solid:like"
+                    color="red"
+                    className="active:animate-wiggle  "
+                  />
                 ) : (
-                  <Icon icon="icon-park-outline:like" color="gray" />
+                  <Icon
+                    icon="icon-park-outline:like"
+                    color="gray"
+                    className="active:animate-wiggle  "
+                  />
                 )}
               </div>
             </div>

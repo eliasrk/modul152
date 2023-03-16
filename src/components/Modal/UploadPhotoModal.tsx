@@ -30,6 +30,8 @@ const UploadPhotoModal = ({
     { License: "CC BY-NC" },
     { License: "CC BY-NC-SA" },
     { License: "CC BY-NC-ND" },
+    { License: "CC0" },
+    { License: "All rights reserved" },
   ];
   const handleCreatorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCreator(event.target.value);
@@ -119,7 +121,7 @@ const UploadPhotoModal = ({
                 <div className="h-full rounded-3xl bg-white bg-gradient-to-b p-5 shadow-md">
                   <div className="flex w-full justify-end ">
                     <button
-                      className="btn-sm btn-circle shadow-sm hover:bg-slate-100"
+                      className="btn-sm btn-circle rounded-full px-1 shadow-sm hover:bg-slate-200"
                       onClick={() => setIsModalOpen(false)}
                     >
                       ✕

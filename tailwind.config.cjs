@@ -12,10 +12,15 @@ module.exports = {
           "0%,50%, 100%": { transform: "rotate(-6deg)" },
           "25%, 75%": { transform: "rotate(6deg)" },
         },
+        minorwiggle: {
+          "0%,50%, 100%": { transform: "rotate(-3deg)" },
+          "25%, 75%": { transform: "rotate(3deg)" },
+        },
       },
       animation: {
         clicked: "clicked 0.2s ease-in-out",
         wiggle: "wiggle 0.5s ease-in-out infinite",
+        minorwiggle: "minorwiggle 0.5s ease-in-out infinite",
       },
     },
   },

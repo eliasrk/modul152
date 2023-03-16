@@ -80,7 +80,17 @@ const Header = ({ name }: headerProps) => {
         )}
         <Menu as="div" className="relative inline-block text-left">
           <div className="flex flex-row">
-            <div className="m-2">{user && <p>{userEmail}</p>}</div>
+            <div className="m-2 flex items-center">
+              {user && (
+                <>
+                  <p>{userEmail}</p>
+                  <h2 className="px-2">|</h2>
+                </>
+              )}
+              {!user && (
+                <p className="animate-minorwiggle duration-200">Login/Signup</p>
+              )}{" "}
+            </div>
             <Menu.Button className="justify-center rounded-full bg-black bg-opacity-10 p-1 text-sm font-medium text-white duration-200 hover:rotate-90 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               <svg
                 className=""
